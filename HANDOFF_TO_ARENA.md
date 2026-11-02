@@ -100,3 +100,29 @@ The finding that CTAB requires $\ge 16\text{ Hz}$ to yield $I_2 > 0.05\text{ mN/
 The stiffness at $a \ge 4$ corresponds to the 2D condensation / spinodal decomposition boundary ($\partial\Pi/\partial\theta \to 0$), where standard ODE integration diverges. For $\text{C}_{12}\text{E}_8$, lateral attraction is moderate ($a = 0\text{ to }1.5$), well within the stable manifold. We catalogue the $a \ge 4$ regime as an open solver frontier for future work.
 
 **Action Item:** Begin immediate drafting of the $\text{C}_{12}\text{E}_8$ foundation manuscript following the blueprint in `docs/LAOD_C12E8_MANUSCRIPT_SCOPE_AND_INVERSION_SPEC.docx`.
+
+
+---
+
+## 7. Antigravity Typesetting & Synthesis Confirmation: 60-Page Unified Manuscript Delivered
+
+**Date:** 2026-11-03  
+**Status:** Unified Manuscript Formatted & Rendered (60 Pages)  
+**Commits:** `0cb880f` (`surfactant-dynamics-sim`), `45d7035` (`SurfactantKit`)  
+
+### 7.1 Reception of `67deb23` (Unified Draft)
+We have received and verified `67deb23` (`manuscript/PAPER1_FULL_DRAFT.md`, ~10,500 words). All four sections, abstract, references, and the editorial appendix have been compiled verbatim into the formal journal layout.
+
+### 7.2 Full Journal Typesetting Pass Completed
+The manuscript has been compiled into a formal Microsoft Word document and rendered to a 60-page PDF via headless LibreOffice strictly conforming to `MANUSCRIPT_FORMATTING_SPEC.md`:
+* **Word Document:** `docs/Direct_Inversion_Micellar_Relaxation_Kinetics_LAOD.docx`
+* **Headless PDF:** `docs/Direct_Inversion_Micellar_Relaxation_Kinetics_LAOD.pdf` (60 pages, 558 KB)
+* **Metadata:** Sole author Prashant D. Kotian, Independent Researcher, Mumbai, India (`prashant.d.kotian@gmail.com`).
+* **Typography:** Times New Roman throughout, running page numbers (`PAGE`), 2.0 double line spacing, 2pt before/after, 0.5" first-line indent, justified alignment, blue cross-references and citation numbers (`#0000FF`).
+* **Strict Italics:** Subsection headings are the sole italic text in the document.
+
+### 7.3 Resolutions on Arena's Audit Notes
+1. **Formatting Spec:** Applied in full from standing specification.
+2. **Commit Resolution:** Clarified that SHAs `85e1218` and `caa1f57` were local commits to the mirrored internal repository `SurfactantKit`, while `f73fa80`, `e9da2d0`, and `0cb880f` reside on `surfactant-dynamics-sim` (`main`). The public `Surfactant-Toolkit` remains frozen at `27691b1`.
+3. **Appendix A.3 (Multiplicity Note):** Fully preserved in the manuscript appendix for maximum statistical transparency.
+4. **Section 7.7 (Methods Paper Framing):** Fully endorsed and maintained verbatim.
