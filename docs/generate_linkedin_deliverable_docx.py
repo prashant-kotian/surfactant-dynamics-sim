@@ -238,7 +238,8 @@ post1_lines = [
     "Read the full open-access preprint on ChemRxiv:",
     "https://doi.org/10.26434/chemrxiv.15011440/v1",
     "",
-    "Co-authored with Prof. Sunil S. Bhagwat (ICT Mumbai & IISER Pune).",
+    "Author: Prashant D. Kotian (ICT Mumbai).",
+    "Contact & Critique: chy22pd.kotian@phd.ictmumbai.edu.in / kotian333@gmail.com",
     "",
     "#Surfactants #ChemicalEngineering #FormulationChemistry #PatentAnalytics #IntellectualProperty #ColloidChemistry #GreenChemistry #ChemRxiv"
 ]
@@ -275,7 +276,8 @@ post2_lines = [
     "Open-Source GitHub Repository & MCP Server:",
     "https://github.com/prashant-kotian/Surfactant-Toolkit",
     "",
-    "Co-authored with Prof. Sunil S. Bhagwat (ICT Mumbai & IISER Pune).",
+    "Author: Prashant D. Kotian (ICT Mumbai).",
+    "Contact & Critique: chy22pd.kotian@phd.ictmumbai.edu.in / kotian333@gmail.com",
     "",
     "#ArtificialIntelligence #LLMs #ChemistryAI #Surfactants #OpenSource #ModelContextProtocol #MachineLearning #PhysicalChemistry #ChemRxiv"
 ]
@@ -295,9 +297,9 @@ add_body_paragraph(doc, "When formulators or machine learning researchers engage
 add_section_heading(doc, "5. References")
 refs = [
     "[1] Kotian, P. D. TheChemSolver Computational Chemistry Platform and Repository Architecture. TheChemSolver Web Portal, 2026.",
-    "[2] Kotian, P. D.; Bhagwat, S. S. Nitrosamine Impurity Risk Assessment Protocols and Equilibrium Partitioning in Personal Care Formulations. ChemRxiv, 2026, 10.26434/chemrxiv.15011497/v1.",
-    "[3] Kotian, P. D.; Bhagwat, S. S. Patent Landscape of Gemini (Dimeric) Surfactants: Cationic Dominance in Intellectual Property versus the Emerging Green Surfactant Narrative. ChemRxiv, 2026, 10.26434/chemrxiv.15011440/v1.",
-    "[4] Kotian, P. D.; Bhagwat, S. S. Surfactant-Toolkit and SurfBench-200: An Open Computation Toolkit and a Benchmark of Tool-Augmented Language-Model Reasoning in Surfactant Science. ChemRxiv, 2026, 10.26434/chemrxiv.15011298/v1.",
+    "[2] Kotian, P. D. Nitrosamine Impurity Risk Assessment Protocols and Equilibrium Partitioning in Personal Care Formulations. ChemRxiv, 2026, 10.26434/chemrxiv.15011497/v1.",
+    "[3] Kotian, P. D. Patent Landscape of Gemini (Dimeric) Surfactants: Cationic Dominance in Intellectual Property versus the Emerging Green Surfactant Narrative. ChemRxiv, 2026, 10.26434/chemrxiv.15011440/v1.",
+    "[4] Kotian, P. D. Surfactant-Toolkit and SurfBench-200: An Open Computation Toolkit and a Benchmark of Tool-Augmented Language-Model Reasoning in Surfactant Science. ChemRxiv, 2026, 10.26434/chemrxiv.15011298/v1.",
     "[5] Risse, K.; Yang, J.; de Groot, A.; Sagis, L. M. C. Advances in Large Amplitude Oscillatory Dilatational Surface Rheology - A Review. Adv. Colloid Interface Sci. 2025, 345, 103625."
 ]
 for ref in refs:
