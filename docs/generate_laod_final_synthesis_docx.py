@@ -255,8 +255,8 @@ add_body_paragraph(doc, "Crucially, systematic parameter scans establish that th
 add_section_heading(doc, "2. Experimental Provenance and Drop Mechanical Stability")
 add_body_paragraph(doc, "A critical practical question regarding the execution of large-amplitude oscillatory dilatational rheology (LAOD) is whether a pendant drop or captive bubble remains axisymmetrically stable at epsilon = 0.20 on commercial profile analysis tensiometers [3,4].")
 
-add_subsection_heading(doc, "2.1 Bond Number Criterion and Capillary Radius Selection")
-add_body_paragraph(doc, "Hydrodynamic drop stability under oscillatory dilatation is governed by the gravitational-capillary Bond number, Bo = Delta rho * g * R_tip^2 / gamma. For typical surfactant aqueous systems (gamma = 30 to 72 mN/m, Delta rho = 1000 kg/m3) on standard 1.0 to 1.5 mm outer-diameter capillaries, Bo lies well below 0.15 [3]. Classical studies by Loglio et al. and Kotsmar et al. have demonstrated that pendant drops subjected to sinusoidal area strains up to epsilon = 0.25 to 0.30 remain strictly pinned to the capillary edge without edge detachment, drop shedding, or non-axisymmetric sloshing modes [3,4].")
+add_subsection_heading(doc, "2.1 Large-Amplitude Drop Mechanical Stability")
+add_body_paragraph(doc, "A critical practical question regarding the execution of large-amplitude oscillatory dilatational rheology (LAOD) is whether a pendant drop or captive bubble remains axisymmetrically stable at epsilon = 0.20 on commercial profile analysis tensiometers [3,4]. Classical experimental studies by Loglio et al. and Kotsmar et al. have demonstrated that pendant drops subjected to sinusoidal area strains up to epsilon = 0.20 to 0.30 on standard 1.0 to 1.5 mm outer-diameter capillaries maintain strict contact-line pinning without drop shedding or non-axisymmetric sloshing [3,4]. We treat epsilon = 0.20 as the recommended operational design point to be verified on the bench prior to kinetic acquisition.")
 
 add_subsection_heading(doc, "2.2 Instrument Hardware Specifications and Literature Provenance")
 add_body_paragraph(doc, "Standard commercial Sinterface PAT-1M configurations employ high-resolution CMOS/CCD cameras acquiring synchronized drop profile coordinates at 25 to 50 frames per second (PAL and USB 3.0 standards) [5]. At the 1.0 Hz operating frequency, this provides 25 to 50 frames per oscillatory cycle, far exceeding the 5 frames per cycle threshold established by Monte Carlo noise simulations [2,5]. Conversely, for fast ionic surfactant systems (CTAB and SDS), high-frequency capillary pressure tensiometry (CPT) actuated by piezoresistive micro-transducers operates across 0.1 to 500 Hz with 10 kHz data logging, providing the required high-frequency bandwidth [6].")
@@ -266,7 +266,8 @@ add_section_heading(doc, "3. Protocol Architecture for Parameter Identification"
 add_body_paragraph(doc, "Section 7 of the manuscript defines two complementary experimental protocols for parameter extraction, explicitly acknowledging their respective strengths and statistical conditioning [2].")
 
 add_subsection_heading(doc, "3.1 Protocol A: Headline Single-Concentration Inversion with Thermodynamic Closure")
-add_body_paragraph(doc, "When the mean micellar aggregation number n_bar is known from independent light scattering, fluorescence quenching, or small-angle neutron scattering (SANS), the micellar capacity Cm is closed analytically via the mass-action relation Cm = ((c0 - CMC)/CMC)*n_bar [1,2]. A single oscillatory dilatational measurement at the optimal concentration c0 = 1.5x CMC and frequency omega = 6.28 rad/s (1.0 Hz) identifies the micellar dissolution time tau2 with an exceptional relative standard error of 0.2% to 0.3% [2]. This constitutes the primary recommendation of the study.")
+add_body_paragraph(doc, "When the mean micellar aggregation number n_bar is known from independent light scattering or small-angle neutron scattering (SANS), the micellar capacity Cm is closed analytically via the mass-action relation Cm = ((c0 - CMC)/CMC)*n_bar [1,2]. At the operating design point, numerical evaluation yields the partial derivatives d delta / d ln Cm = +14.06 degrees per e-fold and d delta / d ln tau2 = -13.29 degrees per e-fold. Because these derivatives possess nearly equal magnitude and opposite signs (+14.06 vs -13.29), increasing capacity and increasing relaxation time cancel in the phase lag, explaining the near-perfect collinearity (r = 0.997) at a single concentration [2].")
+add_body_paragraph(doc, "Consequently, uncertainties in the aggregation number n_bar propagate into systematic bias on tau2 with a strict 1:1 ratio (a 10% error in n_bar produces a 10.1% systematic bias in tau2). A single oscillatory dilatational measurement at c0 = 1.5x CMC and omega = 6.28 rad/s (1.0 Hz) identifies tau2 with 0.2% to 0.3% statistical precision under 0.05 mN/m noise, subject to 1:1 systematic sensitivity to n_bar [2]. This transparently bounded result forms the primary recommendation of the study.")
 
 add_subsection_heading(doc, "3.2 Protocol B: Exploratory Multi-Concentration Series Inversion")
 add_body_paragraph(doc, "For uncharacterized surfactant systems where n_bar has not been measured, joint identification of (tau2, Cm) requires multi-concentration series regression. We transparently report that the mathematical correlation between tau2 and Cm ranges from 0.1 to 0.6 and does not decrease monotonically with the addition of arbitrary concentration points [2]. Protocol B requires a systematic 4- to 5-point sweep across 1.2x to 2.5x CMC with joint nonlinear least-squares regression, rather than a naive two-point fit.")
@@ -285,9 +286,9 @@ for i, h in enumerate(headers):
     set_cell_font(t1.rows[0].cells[i], h, bold=True, align_right=(i == 5))
 
 t1_data = [
-    ["Nonionic (Slow)", "C12E8", "1.0 to 4.0 s", "0.04 to 1.19 Hz (PAT-1M)", "Protocol A (0.2% SE)", "[2,5]"],
-    ["Cationic (Medium)", "CTAB", "65 ms", "2.4 to 73 Hz (CPT/MST)", "Protocol B (CPT)", "[2,6]"],
-    ["Anionic (Fast)", "SDS", "38 ms", "4.2 to 126 Hz (CPT)", "Protocol B (CPT)", "[2,6]"]
+    ["Nonionic (Slow)", "C12E8", "1.0 to 4.0 s", "0.04 to 1.19 Hz (PAT-1M)", "Protocol A (0.2% stat, 1:1 n_bar)", "[2,5]"],
+    ["Cationic (Medium)", "CTAB", "65 ms", ">= 16 Hz (CPT band)", "Protocol B (CPT)", "[2,6]"],
+    ["Anionic (Fast)", "SDS", "38 ms", ">= 20 Hz (CPT band)", "Protocol B (CPT)", "[2,6]"]
 ]
 
 for row_idx, data in enumerate(t1_data, start=1):
