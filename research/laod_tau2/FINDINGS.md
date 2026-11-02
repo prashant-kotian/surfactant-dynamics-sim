@@ -74,7 +74,7 @@ analytic anchor will publish that bug.
 |---|---|---|---|
 | 1 Hz oscillating drop (2–1000 mHz) | relSE 13.4 ✗ | 3.14 ✗ | 0.97 ✗ |
 | 10 Hz capillary-pressure (0.1–62.8 rad/s) | 0.84 ✗ | **0.16 ✓** | **0.23 ✓** |
-| 100 Hz microtensiometer (1–628 rad/s) | **0.04 ✓** | **0.04 ✓** | **0.07 ✓** |
+| 100 Hz oscillating-bubble CPT (1–628 rad/s) | **0.04 ✓** | **0.04 ✓** | **0.07 ✓** |
 
 **Recovery requires the instrument window to bracket ωτ₂ ≈ 1.** Empirically:
 usable (relSE < 0.3) needs `ω_max·τ₂ ≳ 0.3`, precise (relSE < 0.1) needs

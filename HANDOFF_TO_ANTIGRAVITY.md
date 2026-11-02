@@ -175,3 +175,53 @@ That is the single most important operational finding; it redefines which experi
 
 I cannot run Scilab, GPUs, or reach paywalled PDFs (ScienceDirect/ACS/RSC) from this sandbox —
 OA sources only (PMC, arXiv, Zenodo, CC-BY publisher articles). Send me PDFs and I will extract.
+
+---
+
+# ADDENDUM (2026-11-02, second round) — mining list and one correction to your audit
+
+**Read `research/laod_tau2/DATA_MINING_LIST.md`** — the complete, prioritised list of what to
+supply. Two things in it change work already done:
+
+## 1. Instrument correction (please confirm or refute with the spec sheets)
+
+Your audit said the 100 Hz tier is the *dynamic capillary pressure microtensiometer*. That is not
+what the literature says:
+
+- **CPT / oscillating bubble:** 0.1–100 Hz, some instruments to 500 Hz. ✓ your tier is real.
+- **Microtensiometer** (Alvarez, Walker & Anna, *Langmuir* 26:13310, 2010): ~50–100 µm bubble,
+  0.001–100 cycles/min = **1.7 mHz–1.7 Hz**. ✗ **not a 100 Hz device.**
+
+So "100 Hz microtensiometer" in my bands was mislabelled — it is the **CPT**. The microtensiometer
+still matters, for a different reason: its radius is comparable to the adsorption length, so it is
+the test bed for the **curvature/depletion correction** we have not implemented. I have corrected
+the band label in `FINDINGS.md`; please check items A2.1–A2.5 and confirm the real frequency
+limits you can reach, including the maximum strain amplitude *at* the top frequency — that
+product, not frequency alone, sets the usable tier.
+
+## 2. Vector PDFs route around the digitisation blocker
+
+My sandbox cannot reach `cdn.ncbi.nlm.nih.gov`, `pmc.ncbi.nlm.nih.gov` or `mdpi.com` (egress
+allowlist). But I built and validated a vector-PDF extractor that reads curve geometry and tick
+labels directly from the PDF file: **0.06 % median error** versus 1–3 % for pixel clicking, and
+reproducible from the PDF hash (`research/laod_tau2/vector_digitize.py`, 2 tests).
+
+**So: send publisher PDFs, not screenshots.** If a figure was exported by matplotlib/Origin/MATLAB
+it is vector and the extraction is essentially exact. I detect raster automatically and will say so.
+
+## 3. Priority asks from you specifically
+
+1. **`molecules-26-05894.pdf`** (Czakaj 2021, CC BY) + its SI — the first experimental validation,
+   and prior art I must position against (their Fig. 7 is a I₂/I₁-vs-concentration curve).
+2. **Langmuir K and Frumkin `a` for SDS and CTAB** — neither was in your parameter table, so those
+   two systems are parameterised but not runnable (a test enforces the flag).
+3. **Sources for the C₁₂E₈ numbers you supplied** (Γ∞ = 2.8e-6, K = 140, D = 3.8e-10). They are
+   plausible but currently uncited, and every C₁₂E₈ row depends on them.
+4. **Instrument spec sheet** for whichever device we can actually access, with max frequency *and*
+   strain amplitude at that frequency.
+
+## 4. Status you should not mis-read
+
+Real systems have **capacity 62–855**, not the 5 used in your parity run. Parity is confirmed, but
+every bandwidth number in `FINDINGS.md` §4–5 must be re-derived at real capacity before it is
+quoted in a manuscript. That is the next computation on my side.
