@@ -186,7 +186,7 @@ p_aff.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 p_aff.paragraph_format.line_spacing = 2.0
 p_aff.paragraph_format.space_before = Pt(2)
 p_aff.paragraph_format.space_after = Pt(6)
-run_aff = p_aff.add_run("Department of Chemical Engineering, Institute of Chemical Technology (ICT), Mumbai - 400019, India")
+run_aff = p_aff.add_run("Independent Researcher, Mumbai, India")
 run_aff.font.name = FONT_NAME
 run_aff.font.size = Pt(12)
 run_aff.font.bold = False
@@ -238,7 +238,7 @@ post1_lines = [
     "Read the full open-access preprint on ChemRxiv:",
     "https://doi.org/10.26434/chemrxiv.15011440/v1",
     "",
-    "Author: Prashant D. Kotian (ICT Mumbai).",
+    "Questions or critique on the paper: prashant.d.kotian@gmail.com",
     "Questions or critique on the paper: prashant.d.kotian@gmail.com",
     "",
     "#Surfactants #ChemicalEngineering #FormulationChemistry #PatentAnalytics #IntellectualProperty #ColloidChemistry #GreenChemistry #ChemRxiv"
@@ -276,7 +276,7 @@ post2_lines = [
     "Open-Source GitHub Repository & MCP Server:",
     "https://github.com/prashant-kotian/Surfactant-Toolkit",
     "",
-    "Author: Prashant D. Kotian (ICT Mumbai).",
+    "Questions or critique on the paper: prashant.d.kotian@gmail.com",
     "Questions or critique on the paper: prashant.d.kotian@gmail.com",
     "",
     "#ArtificialIntelligence #LLMs #ChemistryAI #Surfactants #OpenSource #ModelContextProtocol #MachineLearning #PhysicalChemistry #ChemRxiv"
