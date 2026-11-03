@@ -1027,10 +1027,18 @@ concentration chosen for invertibility rather than for signal strength.
    liquid interface. *Chem. Eng. Sci.* **1972**, *27*, 1283–1291.
 3. Aniansson, E. A. G.; Wall, S. N. Kinetics of step-wise micelle association. *J. Phys. Chem.*
    **1974**, *78*, 1024–1030.
-4. Stadler, K. et al. High-frequency capillary pressure tensiometer with piezo-actuator operating up
-   to 500 Hz. *Meas. Sci. Technol.* **2016**, *27*, 045301.
-5. Risse, S. et al. *Adv. Colloid Interface Sci.* **2025**, *325*, 103050.
-6. Loglio, G. et al. *Colloids Surf. A* **2001**, *186*, 63–71.
-7. Kotsmar, C. et al. *Colloids Surf. A* **2012**, *413*, 20–25.
-8. Miller, R. et al. Transient and oscillatory surface dilatational rheology: principles and
-   instrumentation. *Adv. Colloid Interface Sci.* **2004**, *111*, 17–34.
+4. Stadler, D.; Hofmann, M. J.; Motschmann, H.; Shamonin, M. Automated system for measuring the
+   surface dilational modulus of liquid–air interfaces. *Meas. Sci. Technol.* **2016**, *27*, 065301.
+   doi:10.1088/0957-0233/27/6/065301.
+5. Risse, K.; Yang, J.; de Groot, A.; Giménez-Ribes, G.; Shen, P.; Drusch, S.; Hinderink, E. B. A.;
+   Sagis, L. M. C. Advances in large amplitude oscillatory dilatational surface rheology – A review.
+   *Adv. Colloid Interface Sci.* **2025**, *345*, 103625. doi:10.1016/j.cis.2025.103625.
+6. Loglio, G.; Pandolfini, P.; Miller, R.; Makievski, A. V.; Krägel, J.; Neumann, A. W. Drop and
+   bubble shape tensiometry under oscillating area conditions. *Colloids Surf. A* **2001**, *186*, 63–71.
+   doi:10.1016/S0927-7757(01)00483-3.
+7. Kotsmar, C.; Pradines, V.; Aksenenko, E. V.; Fainerman, V. B.; Miller, R. Surface dilatational
+   rheology of mixed β-casein/surfactant adsorption layers. *Colloids Surf. A* **2012**, *413*, 20–25.
+   doi:10.1016/j.colsurfa.2012.03.023.
+8. Miller, R.; Ferri, J. K.; Javadi, A.; Krägel, J.; Aksenenko, E. V.; Fainerman, V. B. Transient and
+   oscillatory surface dilatational rheology: principles and instrumentation. *Adv. Colloid Interface
+   Sci.* **2004**, *111*, 17–34. doi:10.1016/j.cis.2004.07.005.
