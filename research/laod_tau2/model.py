@@ -61,6 +61,7 @@ class ModelParams:
     gamma0: float = 72.0
     n_factor: float = 1.0
     temperature_K: float = 298.15
+    frumkin_a: float = 0.0       # lateral interaction; 0 = Langmuir
     capacity: float = 0.0        # C_m (dimensionless)
     tau2: float = 1.0            # s
     n_cells: int = 96
@@ -68,27 +69,109 @@ class ModelParams:
     extent_factor: float = 8.0
 
     # ---- equilibrium ---------------------------------------------------
+    def _theta_eq(self, c_s: float) -> float:
+        """Coverage in equilibrium with subsurface concentration c_s.
+
+        Isotherm (Frumkin, with the sign convention used throughout this
+        module: Pi = -nRT Gamma_inf [ln(1-th) + a th^2]):
+
+            K c_s = th/(1-th) * exp(-2 a th)
+
+        so the residual is
+
+            f(th) = ln(th/(1-th)) - 2 a th - ln(K c_s),      df/dth = 1/(th(1-th)) - 2a.
+
+        BUG FIX 2026-11-03 (two separate defects, both previously masked):
+          1. theta0 used the plain Langmuir formula K c/(1+K c) even when
+             frumkin_a != 0. For a = 4, K c = 0.0066 that returns 0.0065 when
+             the correct coverage is 0.892. gamma_s_eq is built on theta0, so
+             every Frumkin run started from a near-bare interface, relaxed
+             towards equilibrium instead of oscillating about it, and produced
+             a flat gamma(t). That was misread (FINDINGS 13.9) as numerical
+             stiffness -- it was a sign error in the residual.
+          2. The old Newton used df = 1/(th(1-th)) + 2a, i.e. the wrong sign on
+             the interaction term. df/dth genuinely goes NEGATIVE past the
+             spinodal th(1-th) = 1/(2a), so a plain Newton can walk away from
+             the root. We bracket on a grid and bisect instead, which is slower
+             but cannot diverge, and we select the HIGH-coverage branch because
+             the adsorbed monolayer is the high-coverage solution.
+
+        Above the spinodal (a > ~2) the isotherm is multi-valued and the branch
+        choice is a physical assumption, not arithmetic. That is the 2D
+        condensation boundary referred to as a bounded model limit.
+        """
+        if self.frumkin_a == 0.0:
+            return self.K * c_s / (1.0 + self.K * c_s)
+
+        lkc = math.log(self.K * c_s)
+        a = self.frumkin_a
+
+        def f(th: float) -> float:
+            return math.log(th / (1.0 - th)) - 2.0 * a * th - lkc
+
+        # Dense grid: the function is smooth and the roots are well separated.
+        n = 4096
+        grid = [(i + 0.5) / n for i in range(n)]
+        brackets = []
+        prev_th, prev_f = grid[0], f(grid[0])
+        for th in grid[1:]:
+            cur_f = f(th)
+            if prev_f == 0.0:
+                brackets.append((prev_th, prev_th))
+            elif prev_f * cur_f < 0.0:
+                brackets.append((prev_th, th))
+            prev_th, prev_f = th, cur_f
+        if not brackets:
+            # No sign change: saturate to whichever end is closest to zero.
+            return 1e-6 if abs(f(grid[0])) < abs(f(grid[-1])) else 1.0 - 1e-6
+
+        lo, hi = brackets[-1]                      # high-coverage branch
+        for _ in range(200):
+            mid = 0.5 * (lo + hi)
+            if f(lo) * f(mid) <= 0.0:
+                hi = mid
+            else:
+                lo = mid
+            if hi - lo < 1e-14:
+                break
+        return 0.5 * (lo + hi)
+
     @property
     def theta0(self) -> float:
-        return self.K * self.c0 / (1.0 + self.K * self.c0)
+        return self._theta_eq(self.c0)
 
     @property
     def gamma_s_eq(self) -> float:
         return self.gamma_inf * self.theta0
 
     def isotherm(self, c_s: float) -> float:
-        return self.gamma_inf * self.K * c_s / (1.0 + self.K * c_s)
+        """Langmuir if frumkin_a == 0, else the Frumkin isotherm (implicit)."""
+        return self.gamma_inf * self._theta_eq(c_s)
+
+    def _cs_of_gamma(self, G: float) -> float:
+        """Inverse isotherm: subsurface concentration from surface excess."""
+        th = min(max(G / self.gamma_inf, 1e-12), 1.0 - 1e-12)
+        return th / (1.0 - th) * math.exp(-2.0 * self.frumkin_a * th) / self.K
 
     def dgamma_dcs(self, c_s: float) -> float:
-        return self.gamma_inf * self.K / (1.0 + self.K * c_s) ** 2
+        """d gamma / d c_s at the interface, for either isotherm."""
+        if self.frumkin_a == 0.0:
+            return self.gamma_inf * self.K / (1.0 + self.K * c_s) ** 2
+        th = self.isotherm(c_s) / self.gamma_inf
+        th = min(max(th, 1e-12), 1.0 - 1e-12)
+        dgam_dth = self.n_factor * R_GAS * self.temperature_K * self.gamma_inf * 1e3 * (
+            -1.0 / (1.0 - th) + 2.0 * self.frumkin_a * th
+        )
+        dcs_dth = c_s * (1.0 / (th * (1.0 - th)) - 2.0 * self.frumkin_a)
+        return dgam_dth / dcs_dth if dcs_dth != 0 else float("inf")
 
     def surface_tension(self, gamma_s):
         import numpy as np
 
         g = np.minimum(np.asarray(gamma_s, dtype=float), self.gamma_inf * (1.0 - 1e-12))
-        return self.gamma0 + (
-            self.n_factor * R_GAS * self.temperature_K * self.gamma_inf * 1e3 * np.log1p(-g / self.gamma_inf)
-        )
+        th = np.maximum(g / self.gamma_inf, 1e-12)
+        rt = self.n_factor * R_GAS * self.temperature_K * self.gamma_inf * 1e3
+        return self.gamma0 + rt * (np.log1p(-th) + self.frumkin_a * th * th)
 
 
 @dataclass
@@ -160,8 +243,8 @@ def run_oscillation(
     y0 = np.concatenate([[G_eq], np.full(n_int, c10), np.full(n_int, M0)])
 
     def subsurface(G):
-        """Inverse Langmuir: cs(Gamma), guarded away from full coverage."""
-        return G / (K * max(Ginf - G, 1e-12 * Ginf))
+        """Inverse isotherm: cs(Gamma), guarded away from full coverage."""
+        return p._cs_of_gamma(G)
 
     def rhs(t, y):
         G = y[iG]
@@ -213,12 +296,26 @@ def run_oscillation(
         raise RuntimeError(f"integration failed: {sol.message}")
 
     Gs = sol.y[iG]
+
+    # Mass-balance diagnostic. This was previously hard-coded to nan (an
+    # unimplemented stub), which was then misread as a numerical failure.
+    # Total surfactant is computed the same way the RHS conserves it:
+    # integral of bulk monomer + integral of micellar + adsorbed Gamma.
+    # A semi-infinite Dirichlet boundary means the domain can exchange with
+    # the far field, so this monitors DRIFT of the interior sum, which the
+    # conservative exchange term must not change.
+    m0 = y0[1 : 1 + n_int] * dV
+    m0 = float(np.sum(m0) + np.sum(y0[iM : iM + n_int] * dV) + y0[iG])
+    m_end = float(np.sum(sol.y[1 : 1 + n_int, -1] * dV)
+                  + np.sum(sol.y[iM : iM + n_int, -1] * dV) + sol.y[iG, -1])
+    mass_error = abs(m_end - m0) / abs(m0) if m0 else float("nan")
+
     return OscillationResult(
         t=sol.t.tolist(),
         gamma_mN_m=p.surface_tension(Gs).tolist(),
         area_rel=area(sol.t).tolist(),
         gamma_surface_excess=Gs.tolist(),
-        mass_error=float("nan"),
+        mass_error=mass_error,
         n_cycles=n_cycles,
         params={"omega": omega, "eps": eps, "capacity": p.capacity, "tau2": p.tau2},
     )
