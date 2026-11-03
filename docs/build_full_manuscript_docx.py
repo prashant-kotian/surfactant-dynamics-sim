@@ -14,7 +14,7 @@ Strictly adheres to D:\CodeProjects\PhD-Research\MANUSCRIPT_FORMATTING_SPEC.md:
 6. Paragraph spacing: 2pt before, 2pt after, double line spacing (2.0), 0.5" first-line indent, justified.
 7. Tables: sequential numbering, 10pt Times New Roman, bold headers, justified cells, blue citations.
 8. Citations & cross-references: blue (RGBColor(0, 0, 255)).
-9. Clean delivery: no appendix, ends cleanly after References and Reference flags.
+9. Clean delivery: no appendix, no internal audit flags, ends cleanly after References.
 10. Headless LibreOffice PDF conversion verification.
 """
 import os
@@ -116,6 +116,33 @@ def add_body_paragraph(doc, text):
     p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.first_line_indent = Inches(0.5)
     format_text_runs(p, text, is_italic=False, is_bold=False, font_size=12)
+    return p
+
+def add_equation_paragraph(doc, text):
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.line_spacing = 2.0
+    p.paragraph_format.space_before = Pt(4)
+    p.paragraph_format.space_after = Pt(4)
+    p.paragraph_format.first_line_indent = Inches(0.5)
+    
+    # Add tab stop at 6.5 inches (9360 dxa) for equation number
+    pPr = p._p.get_or_add_pPr()
+    tabs = OxmlElement('w:tabs')
+    tab = OxmlElement('w:tab')
+    tab.set(qn('w:val'), 'right')
+    tab.set(qn('w:pos'), '9360')
+    tabs.append(tab)
+    pPr.append(tabs)
+    
+    m = re.search(r'^(.*?)\s*\((\d+)\)\s*$', text.strip())
+    if m:
+        eq_body = re.sub(r' {3,}', '   ', m.group(1)).strip()
+        eq_num = f"({m.group(2)})"
+        full_str = eq_body + '\t' + eq_num
+        format_text_runs(p, full_str, is_italic=False, is_bold=False, font_size=12)
+    else:
+        format_text_runs(p, text.strip(), is_italic=False, is_bold=False, font_size=12)
     return p
 
 def add_list_item(doc, text, is_numbered=False):
@@ -329,8 +356,8 @@ while i < N:
         i += 1
         continue
         
-    # Strictly exclude any appendix
-    if s_line.startswith('# Appendix') or s_line.startswith('## Appendix'):
+    # Strictly exclude any appendix or internal flags
+    if s_line.startswith('# Appendix') or s_line.startswith('## Appendix') or s_line.startswith('### Reference flags'):
         break
         
     # Section Heading
@@ -384,6 +411,12 @@ while i < N:
                         set_cell_font(t.rows[r_idx].cells[c_idx], cell_val, bold=is_hdr)
         continue
         
+    # Display Equations with equation numbers: e.g. (1), (2), (13)
+    if re.search(r'\(\d+\)\s*$', s_line):
+        add_equation_paragraph(doc, s_line)
+        i += 1
+        continue
+        
     # Numbered item (References or Conclusions)
     m_num = re.match(r'^(\d+)\.\s+(.*)', s_line)
     if m_num:
@@ -419,7 +452,7 @@ while i < N:
     # Standard Body Paragraph (join wrapped lines into one continuous paragraph)
     p_lines = [s_line]
     i += 1
-    while i < N and lines[i].strip() and not lines[i].strip().startswith(('#', '|', '---', '- ')) and not re.match(r'^\d+\.\s+', lines[i].strip()):
+    while i < N and lines[i].strip() and not lines[i].strip().startswith(('#', '|', '---', '- ')) and not re.match(r'^\d+\.\s+', lines[i].strip()) and not re.search(r'\(\d+\)\s*$', lines[i].strip()):
         p_lines.append(lines[i].strip())
         i += 1
     add_body_paragraph(doc, ' '.join(p_lines))

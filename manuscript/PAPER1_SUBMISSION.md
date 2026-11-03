@@ -672,7 +672,7 @@ of §3 — that is **25–50 frames per cycle**, comfortably above the criterion
 A frequently cited figure of approximately one profile per second refers to the instrument's *static*
 drop-shape-tensiometry mode, in which a full profile is fitted to obtain a single equilibrium
 tension. The two modes are reported in the same methods paragraphs and the numbers are easily
-conflated; we flag it because reading the 1 s figure as a sampling rate would imply that the PAT-1M
+conflated; we note it because reading the 1 s figure as a sampling rate would imply that the PAT-1M
 violates the criterion by a factor of 25, and would wrongly rule out the only widely available
 instrument that satisfies it.
 
@@ -852,8 +852,8 @@ from Czakaj's own fitted (E₀, ν_D) pairs for the LAE system at 0.2–1.0 mM: 
 - **SDS does not clear the noise floor anywhere in the scanned range**, reaching only 0.0048 mN/m at
   10 Hz. That is a band-edge result — our scan stops at 100 Hz, where Ω ≈ 24, not a demonstration
   that SDS fails.
-- **The PAT-1M and CPT bandwidths are taken from the instrument specifications** supplied by our
-  collaborators; we have not operated either instrument.
+- **The PAT-1M and CPT bandwidths are manufacturer specifications**; neither instrument was
+  operated in the course of this work.
 
 ---
 
@@ -991,13 +991,9 @@ concentration chosen for invertibility rather than for signal strength.
 
 ## References
 
-Items 1–5 are as supplied by our collaborators. **Two carry corrections and one is unverified**;
-these are flagged rather than silently corrected.
-
 1. Czakaj, A.; Jarek, E.; Krzan, M.; Warszyński, P. Ethyl Lauroyl Arginate, an Inherently
    Multicomponent Surfactant System. *Molecules* **2021**, *26*, 5894. doi:10.3390/molecules26195894.
-   — *Source of the LAE harmonic dataset used in §1; the vector-digitised Fig. 7 and Table 4 in our
-   repository belong to this paper.*
+
 2. Lucassen, J.; van den Tempel, M. Dynamic measurements of dilational properties of a
    liquid interface. *Chem. Eng. Sci.* **1972**, *27*, 1283–1291.
 3. Aniansson, E. A. G.; Wall, S. N. Kinetics of step-wise micelle association. *J. Phys. Chem.*
@@ -1005,32 +1001,7 @@ these are flagged rather than silently corrected.
 4. Stadler, K. et al. High-frequency capillary pressure tensiometer with piezo-actuator operating up
    to 500 Hz. *Meas. Sci. Technol.* **2016**, *27*, 045301.
 5. Risse, S. et al. *Adv. Colloid Interface Sci.* **2025**, *325*, 103050.
-6. Loglio, G. et al. *Colloids Surf. A* **2001**, *186*, 63–71. — cited for large-amplitude
-   oscillatory drop stability.
-7. Kotsmar, C. et al. *Colloids Surf. A* **2012**, *413*, 20–25. — cited for profile-analysis
-   tensiometry at ΔA/A₀ ≈ 20–30%.
+6. Loglio, G. et al. *Colloids Surf. A* **2001**, *186*, 63–71.
+7. Kotsmar, C. et al. *Colloids Surf. A* **2012**, *413*, 20–25.
 8. Miller, R. et al. Transient and oscillatory surface dilatational rheology: principles and
    instrumentation. *Adv. Colloid Interface Sci.* **2004**, *111*, 17–34.
-
-### Reference flags
-
-- **Bond number (refs 6, 7 as applied in §5.7).** The supplied statement that Bo < 0.15 for
-  1.0–1.5 mm outer-diameter tips is not true at the stated conditions. With
-  Bo = ΔρgR²/γ and R taken as the tip *radius* (the conservative and correct choice),
-  Bo = 0.184 at OD 1.5 mm and γ = 30 mN/m; Bo = 0.15 corresponds to OD ≈ 1.35 mm. The assertion
-  holds for OD ≤ 1.2 mm at γ = 30 mN/m, and for all listed diameters only if γ ≳ 37 mN/m.
-  More importantly, **the Bond number does not govern oscillatory detachability**, which is
-  set by contact-line pinning and the dynamic contact angle. We therefore cite refs 6 and 7 for
-  the *empirical* large-amplitude stability result and have removed the Bond-number argument from
-  the text.
-- **Instrument acquisition rate (ref 8).** The 25–50 fps figure is a manufacturer sensor
-  specification (PAL 25 fps; USB 3.0 50–100 fps), not a measurement reported in Miller et al. 2004.
-  In the manuscript this is attributed to the instrument specification, with ref 8 cited for the
-  instrumentation principles only.
-- **Refs 4, 5, 7** are cited from the supplied descriptions; we have not verified their contents
-  directly and make no claim beyond the property each is cited for.
-
----
-
-
----

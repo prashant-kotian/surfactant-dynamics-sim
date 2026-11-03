@@ -143,3 +143,43 @@ I downloaded and inspected the typeset artifact at `surfactant-dynamics-sim` com
 **Not verifiable by me:** commits `caa1f57` and `45d7035` return "No commit found for SHA" from the
 public API. They were described as living in an internal mirror; if so they cannot be cited publicly.
 `f73fa80`, `e9da2d0` and `0cb880f` all resolve.
+
+
+---
+
+## A.7 The "Reference flags" defect (2025-11-03)
+
+The 37-page typeset artifact at `f858592` corrected the appendix leak and the paragraph
+reconstitution (795 fragments -> 260 paragraphs; verified: 37 pages, no editorial appendix).
+
+**But the paper still ended on an editorial section, and this one was my fault.** `PAPER1_SUBMISSION.md`
+carried a subsection headed "Reference flags" as the final section of the manuscript. As printed on
+page 37 it told the reader that:
+
+- a statement "supplied" to us was "not true", and that we had rebutted it;
+- the manuscript "removed the Bond-number argument from the text";
+- refs "4, 5, 7 are cited from the supplied descriptions; we have not verified their contents";
+- a reference was cited "for the instrumentation principles only".
+
+That is an internal audit printed as the last page of a journal submission. It was removed from the
+submission copy, together with the annotations attached to references 1, 6 and 7 and the sentence
+"Items 1-5 are as supplied by our collaborators". The substance is preserved here:
+
+- **Bond number.** Bo = ΔρgR²/γ with R = tip radius gives 0.184 at OD 1.5 mm, γ = 30 mN/m; Bo = 0.15
+  corresponds to OD ≈ 1.35 mm. The claim holds for OD ≤ 1.2 mm at γ = 30 mN/m, or all listed
+  diameters only if γ ≳ 37 mN/m. Independently, Bo is static and does not govern oscillatory
+  detachability. The paper therefore cites refs 6 and 7 empirically and contains no Bond argument.
+- **Acquisition rate.** 25-50 fps is a manufacturer sensor specification, not a figure from Miller et
+  al. 2004. The paper cites ref 8 for instrumentation principles only.
+- **Refs 4, 5, 7** are cited from descriptions supplied to us and were not read directly. They are
+  cited only for the property named against them, and this limitation should be checked before
+  submission by someone with access to the papers.
+
+**Root cause, so it does not recur:** I created the split by truncating `PAPER1_FULL_DRAFT.md` at the
+`# Appendix` marker. Everything *after* that marker in the editorial sense was removed, but the
+"Reference flags" subsection sat *before* it, at the end of the references. The split boundary was
+in the wrong place. Any future split must be verified by reading the last page of the rendered PDF,
+not by trusting the marker.
+
+**Verification now required before submission:** re-render and confirm the paper terminates at
+reference 8, with no trailing section.
